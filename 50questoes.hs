@@ -223,3 +223,11 @@ pMaior (x:xs) = maior_aux 0 0 (x:xs) where
       maior_aux cnt pos (h:z:zs) = if (h >= z)
                                    then maior_aux (cnt + 1) pos (h:zs)
                                    else maior_aux (cnt + 1) (cnt + 1) (z:zs)
+
+-- 37.
+iSort :: Ord a => [a] -> [a]
+iSort [] = []
+iSort (h:[]) = [h]
+iSort (h:x:xs)
+   | h >= x = x : iSort (h:xs)
+   | otherwise = h : iSort (x:xs)
