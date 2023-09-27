@@ -4,6 +4,8 @@ enum_FromTo x y
    | x <= y = x : enum_FromTo (x+1) y
    | otherwise = []
 
+-- 2.
+
 -- 3.
 concat_Lists :: [a] -> [a] -> [a]
 concat_Lists x [] = x
@@ -106,3 +108,40 @@ prefix_Of (x:xs) (y:ys)
 -- 23.
 suffix_Of :: Eq a => [a] -> [a] -> Bool
 suffix_Of x y = prefix_Of (reverse x) (reverse y)
+
+-- 24.
+occur_In_Order :: Eq a => [a] -> [a] -> Bool
+occur_In_Order [] _ = True
+occur_In_Order list [] = False
+occur_In_Order (x:xs) (y:ys)
+   | x == y = occur_In_Order xs ys
+   | otherwise = occur_In_Order (x:xs) ys 
+
+-- 25.
+occurs_In_List :: Eq a => a -> [a] -> [Int]
+occurs_In_List _ [] = []
+occurs_In_List elem (x:xs) = occurs_aux 0 elem (x:xs)
+  where 
+   occurs_aux acc elem [] = []
+   occurs_aux acc elem (x:xs) = if (elem == x)
+                                then acc : occurs_aux (acc + 1) elem xs
+                                else occurs_aux (acc + 1) elem xs
+
+-- 26.
+
+exists_In_List :: Eq a => a -> [a] -> Bool
+exists_In_List _ [] = False
+exists_In_List elem (x:xs)
+   | elem == x = True
+   | otherwise = exists_In_List elem xs 
+
+
+remove_Repeated :: Eq a => [a] -> [a]
+remove_Repeated [] = []
+remove_Repeated (x:xs) = remove_aux [] (x:xs)
+   where 
+      remove_aux acc [] = acc
+      remove_aux acc (x:xs) = if (exists_In_List x acc)
+                              then remove_aux acc xs
+                              else remove_aux (concat_Lists acc [x]) xs 
+
