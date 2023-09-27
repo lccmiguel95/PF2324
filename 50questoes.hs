@@ -56,21 +56,36 @@ group_Lists (h:(x:xs)) =  group_aux [h] h (x:xs) where
 
 -- 12.
 concat_List :: [[a]] -> [a]
-concat_List [[]] = []
+concat_List [] = []
 concat_List (x:xs) = x ++ concat_List xs
 
 -- 13.
-calculate_Suffixes :: [a] -> [[a]]
-calculate_Suffixes [] = [[]]
-calculate_Suffixes (x:xs) = calc_aux [] (x:xs) where
+calculate_Prefixes :: [a] -> [[a]]
+calculate_Prefixes [] = []
+calculate_Prefixes (x:xs) = calc_aux [] (x:xs) where
   calc_aux acc [] = [acc]
   calc_aux acc (x:xs) = acc : calc_aux (acc ++ [x]) xs
 
 -- 14.
+calculate_Suffixes :: [a] -> [[a]]
+calculate_Suffixes (x:[]) = [[x], []]
+calculate_Suffixes (x:xs) = (x:xs) : calculate_Suffixes xs
 
 -- 15.
+heads :: [[a]] -> [a]
+heads [] = []
+heads ([]:xs) = heads xs
+heads (x:xs) = head x : heads xs 
 
 -- 16.
+count_Elems :: [a] -> Int
+count_Elems [] = 0
+count_Elems (x:xs) = 1 + count_Elems xs 
+
+total :: [[a]] -> Int 
+total [] = 0
+total ([]:xs) = total xs
+total (x:xs) = count_Elems x + total xs 
 
 -- 17.
 made_Triples :: [(a,b,c)] -> [(a,c)]
