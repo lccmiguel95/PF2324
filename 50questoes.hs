@@ -67,15 +67,8 @@ calculate_Suffixes (x:xs) = calc_aux [] (x:xs) where
 -- 14.
 
 -- 15.
---remove_Empty :: Eq a => [[a]] -> [a]
---remove_Empty [[]] = []
---remove_Empty (x:xs)
---   | x == [] = remove_Empty xs
---  | otherwise = x ++ remove_Empty xs 
 
---heads_Filter :: [[a]] -> [a]
---heads_Filter [[]] = []
---heads_Filter (x:xs) = head x : heads_Filter (remove_Empty (xs))
+-- 16.
 
 -- 17.
 made_Triples :: [(a,b,c)] -> [(a,c)]
