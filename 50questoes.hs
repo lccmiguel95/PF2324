@@ -182,14 +182,16 @@ concat_Union (x:xs) (y:ys)
    | x == y = x : concat_Union xs ys
    | otherwise = x : concat_Union xs (y:ys)
 
--- 30.  (Parcialmente correta)
-same_Elements :: Eq a => a -> [a] -> [a]
-same_Elements _ [] = []
-same_Elements n (h:t)
-   | n == h = h : same_Elements n t
-   | otherwise = same_Elements n t 
+-- 30.
+check_Elem :: Eq a => a -> [a] -> Bool
+check_Elem _ [] = False
+check_Elem n (x:xs)
+   | n == x = True
+   | otherwise = check_Elem n xs 
 
 remove_Intersect :: Eq a => [a] -> [a] -> [a]
 remove_Intersect [] _ = []
 remove_Intersect _ [] = []
-remove_Intersect list (y:ys) = (same_Elements y list) ++ (remove_Intersect list ys)
+remove_Intersect (x:xs) list
+   | (check_Elem x list) = x : remove_Intersect xs list
+   | otherwise = remove_Intersect xs list 
