@@ -94,4 +94,15 @@ powerEnumFrom n m
    | otherwise = powerEnumFrom n (m - 1) ++ [n ^ m]
 
 -- 21.
-isPrime :: 
+
+-- 22.
+prefix_Of :: Eq a => [a] -> [a] -> Bool
+prefix_Of [] _ = True
+prefix_Of (x:xs) [] = False
+prefix_Of (x:xs) (y:ys)
+   | x == y = prefix_Of xs ys
+   | otherwise = False
+
+-- 23.
+suffix_Of :: Eq a => [a] -> [a] -> Bool
+suffix_Of x y = prefix_Of (reverse x) (reverse y)
