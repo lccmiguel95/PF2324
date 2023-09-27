@@ -182,7 +182,7 @@ concat_Union (x:xs) (y:ys)
    | x == y = x : concat_Union xs ys
    | otherwise = x : concat_Union xs (y:ys)
 
--- 30.
+-- 30.  (Parcialmente correta)
 same_Elements :: Eq a => a -> [a] -> [a]
 same_Elements _ [] = []
 same_Elements n (h:t)
