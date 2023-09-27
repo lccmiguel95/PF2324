@@ -195,3 +195,31 @@ remove_Intersect _ [] = []
 remove_Intersect (x:xs) list
    | (check_Elem x list) = x : remove_Intersect xs list
    | otherwise = remove_Intersect xs list 
+
+-- 31.
+insert_Elem :: Ord a => a -> [a] -> [a]
+insert_Elem n [] = [n]
+insert_Elem n (x:xs)
+   | n < x = n : x : xs 
+   | otherwise = x : insert_Elem n xs 
+
+-- 32.
+unwords_Unlist :: [String] -> String
+unwords_Unlist [] = ""
+unwords_Unlist (x:[]) = x
+unwords_Unlist (x:xs) = x ++ " " ++ unwords_Unlist xs
+
+-- 33.
+unlines_Unlist :: [String] -> String
+unlines_Unlist [] = ""
+unlines_Unlist (x:xs) = x ++ "\n" ++ unlines_Unlist xs
+
+-- 34.
+pMaior :: Ord a => [a] -> Int
+pMaior [] = error "Empty List"
+pMaior (x:xs) = maior_aux 0 0 (x:xs) where
+      maior_aux _ pos [] = pos
+      maior_aux cnt pos (h:[]) = pos
+      maior_aux cnt pos (h:z:zs) = if (h >= z)
+                                   then maior_aux (cnt + 1) pos (h:zs)
+                                   else maior_aux (cnt + 1) (cnt + 1) (z:zs)
