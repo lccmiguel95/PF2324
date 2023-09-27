@@ -55,9 +55,9 @@ group_Lists (h:(x:xs)) =  group_aux [h] h (x:xs) where
       | otherwise = acc : group_aux [x] x xs 
 
 -- 12.
-concat_List :: [[a]] -> [a]
-concat_List [] = []
-concat_List (x:xs) = x ++ concat_List xs
+concat_Group :: [[a]] -> [a]
+concat_Group [] = []
+concat_Group (x:xs) = x ++ concat_Group xs
 
 -- 13.
 calculate_Prefixes :: [a] -> [[a]]
@@ -143,7 +143,6 @@ occurs_In_List elem (x:xs) = occurs_aux 0 elem (x:xs)
                                 else occurs_aux (acc + 1) elem xs
 
 -- 26.
-
 exists_In_List :: Eq a => a -> [a] -> Bool
 exists_In_List _ [] = False
 exists_In_List elem (x:xs)
@@ -160,3 +159,37 @@ remove_Repeated (x:xs) = remove_aux [] (x:xs)
                               then remove_aux acc xs
                               else remove_aux (concat_Lists acc [x]) xs 
 
+-- 27.
+remove_Elem :: Eq a => a -> [a] -> [a]
+remove_Elem _ [] = []
+remove_Elem n (x:xs)
+   | n == x = xs
+   | otherwise = x : remove_Elem n xs
+
+-- 28.
+remove_Occur :: Eq a => [a] -> [a] -> [a]
+remove_Occur [] _ = []
+remove_Occur list [] = list
+remove_Occur (x:xs) (y:ys)
+   | x == y = remove_Occur xs ys
+   | otherwise = x : remove_Occur xs (y:ys)
+
+-- 29.
+concat_Union :: Eq a => [a] -> [a] -> [a]
+concat_Union [] b = b
+concat_Union a [] = a
+concat_Union (x:xs) (y:ys)
+   | x == y = x : concat_Union xs ys
+   | otherwise = x : concat_Union xs (y:ys)
+
+-- 30.
+same_Elements :: Eq a => a -> [a] -> [a]
+same_Elements _ [] = []
+same_Elements n (h:t)
+   | n == h = h : same_Elements n t
+   | otherwise = same_Elements n t 
+
+remove_Intersect :: Eq a => [a] -> [a] -> [a]
+remove_Intersect [] _ = []
+remove_Intersect _ [] = []
+remove_Intersect list (y:ys) = (same_Elements y list) ++ (remove_Intersect list ys)
