@@ -108,7 +108,7 @@ same_Age year num ((name, yr):xs)
 powerEnumFrom :: Int -> Int -> [Int]
 powerEnumFrom n m
    | m < 0 = []
-   | otherwise = powerEnumFrom n (m - 1) ++ [n ^ m]
+   | otherwise = powerEnumFrom n (m-1) ++ [n ^ m]
 
 -- 21.
 
@@ -139,8 +139,8 @@ occurs_In_List elem (x:xs) = occurs_aux 0 elem (x:xs)
   where 
    occurs_aux acc elem [] = []
    occurs_aux acc elem (x:xs) = if (elem == x)
-                                then acc : occurs_aux (acc + 1) elem xs
-                                else occurs_aux (acc + 1) elem xs
+                                then acc : occurs_aux (acc+1) elem xs
+                                else occurs_aux (acc+1) elem xs
 
 -- 26.
 exists_In_List :: Eq a => a -> [a] -> Bool
@@ -221,8 +221,8 @@ pMaior (x:xs) = maior_aux 0 0 (x:xs) where
       maior_aux _ pos [] = pos
       maior_aux cnt pos (h:[]) = pos
       maior_aux cnt pos (h:z:zs) = if (h >= z)
-                                   then maior_aux (cnt + 1) pos (h:zs)
-                                   else maior_aux (cnt + 1) (cnt + 1) (z:zs)
+                                   then maior_aux (cnt+1) pos (h:zs)
+                                   else maior_aux (cnt+1) (cnt+1) (z:zs)
 
 -- 37.
 iSort :: Ord a => [a] -> [a]
@@ -231,3 +231,37 @@ iSort (h:[]) = [h]
 iSort (h:x:xs)
    | h >= x = x : iSort (h:xs)
    | otherwise = h : iSort (x:xs)
+
+-- 38.
+menor :: String -> String -> Bool
+menor "" str2 = True
+menor str1 "" = False
+menor (x:xs) (y:ys)
+   | x > y = False
+   | otherwise = menor xs ys 
+
+-- 39.
+elemMSet :: Eq a => a -> [(a,Int)] -> Bool
+elemMSet _ [] = False
+elemMSet n ((a,num):xs)
+   | n == a = True
+   | otherwise = elemMSet n xs
+
+-- 40.
+convert_ToList :: (a,Int) -> [a]
+convert_ToList (x,0) = []
+convert_ToList (x,num) = x : convert_ToList (x,num-1)
+
+converteMSet :: [(a,Int)] -> [a]
+converteMSet [] = []
+converteMSet ((x,num):xs) = convert_ToList (x,num) ++ converteMSet xs
+
+-- 41.
+insereMSet :: Eq a => a -> [(a,Int)] -> [(a,Int)]
+insereMSet _ [] = []
+insereMSet n ((x,num):[])
+   | n == x = [(x,num+1)]
+   | otherwise = [(x,num), (n,1)]
+insereMSet n ((x,num):xs)
+   | n == x = (x,num+1) : xs
+   | otherwise = (x,num) : insereMSet n xs 
