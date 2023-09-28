@@ -48,7 +48,8 @@ between_Element elem (x:xs) = x : elem : between_Element elem xs
 -- 11.
 group_Lists :: Eq a => [a] -> [[a]]
 group_Lists [] = [[]]
-group_Lists (h:(x:xs)) =  group_aux [h] h (x:xs) where
+group_Lists (h:(x:xs)) =  group_aux [h] h (x:xs)
+    where
     group_aux acc _ [] = [acc]
     group_aux acc h (x:xs)
       | h == x = group_aux (h : acc) h xs
@@ -62,9 +63,10 @@ concat_Group (x:xs) = x ++ concat_Group xs
 -- 13.
 calculate_Prefixes :: [a] -> [[a]]
 calculate_Prefixes [] = []
-calculate_Prefixes (x:xs) = calc_aux [] (x:xs) where
-  calc_aux acc [] = [acc]
-  calc_aux acc (x:xs) = acc : calc_aux (acc ++ [x]) xs
+calculate_Prefixes (x:xs) = calc_aux [] (x:xs)
+    where
+    calc_aux acc [] = [acc]
+    calc_aux acc (x:xs) = acc : calc_aux (acc ++ [x]) xs
 
 -- 14.
 calculate_Suffixes :: [a] -> [[a]]
@@ -136,11 +138,11 @@ occur_In_Order (x:xs) (y:ys)
 occurs_In_List :: Eq a => a -> [a] -> [Int]
 occurs_In_List _ [] = []
 occurs_In_List elem (x:xs) = occurs_aux 0 elem (x:xs)
-  where 
-   occurs_aux acc elem [] = []
-   occurs_aux acc elem (x:xs) = if (elem == x)
-                                then acc : occurs_aux (acc+1) elem xs
-                                else occurs_aux (acc+1) elem xs
+    where 
+    occurs_aux acc elem [] = []
+    occurs_aux acc elem (x:xs)
+       | elem == x = acc : occurs_aux (acc+1) elem xs
+       | otherwise = occurs_aux (acc+1) elem xs
 
 -- 26.
 exists_In_List :: Eq a => a -> [a] -> Bool
@@ -153,11 +155,11 @@ exists_In_List elem (x:xs)
 remove_Repeated :: Eq a => [a] -> [a]
 remove_Repeated [] = []
 remove_Repeated (x:xs) = remove_aux [] (x:xs)
-   where 
-      remove_aux acc [] = acc
-      remove_aux acc (x:xs) = if (exists_In_List x acc)
-                              then remove_aux acc xs
-                              else remove_aux (concat_Lists acc [x]) xs 
+    where 
+    remove_aux acc [] = acc
+    remove_aux acc (x:xs)
+       | exists_In_List x acc = remove_aux acc xs
+       | otherwise = remove_aux (concat_Lists acc [x]) xs 
 
 -- 27.
 remove_Elem :: Eq a => a -> [a] -> [a]
@@ -217,12 +219,13 @@ unlines_Unlist (x:xs) = x ++ "\n" ++ unlines_Unlist xs
 -- 34.
 pMaior :: Ord a => [a] -> Int
 pMaior [] = error "Empty List"
-pMaior (x:xs) = maior_aux 0 0 (x:xs) where
-      maior_aux _ pos [] = pos
-      maior_aux cnt pos (h:[]) = pos
-      maior_aux cnt pos (h:z:zs) = if (h >= z)
-                                   then maior_aux (cnt+1) pos (h:zs)
-                                   else maior_aux (cnt+1) (cnt+1) (z:zs)
+pMaior (x:xs) = maior_aux 0 0 (x:xs)
+    where
+    maior_aux _ pos [] = pos
+    maior_aux cnt pos (h:[]) = pos
+    maior_aux cnt pos (h:z:zs)
+       | h >= z = maior_aux (cnt+1) pos (h:zs)
+       | otherwise = maior_aux (cnt+1) (cnt+1) (z:zs)
 
 -- 37.
 iSort :: Ord a => [a] -> [a]
