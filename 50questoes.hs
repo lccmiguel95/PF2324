@@ -193,7 +193,7 @@ remove_Intersect :: Eq a => [a] -> [a] -> [a]
 remove_Intersect [] _ = []
 remove_Intersect _ [] = []
 remove_Intersect (x:xs) list
-   | (check_Elem x list) = x : remove_Intersect xs list
+   | check_Elem x list = x : remove_Intersect xs list
    | otherwise = remove_Intersect xs list 
 
 -- 31.
